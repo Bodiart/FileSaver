@@ -51,7 +51,7 @@ class ExternalImageFileSaver(context: Context, private val imageBitmap: Bitmap) 
     }
 
     @Throws(java.lang.Exception::class)
-    fun save() {
+    fun save(): Uri? {
         validateFilename()
         val savedImageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
             saveAndroidAbove10()
@@ -59,6 +59,8 @@ class ExternalImageFileSaver(context: Context, private val imageBitmap: Bitmap) 
             saveAndroidBefore10()
 
         addToGallery(savedImageUri)
+
+        return savedImageUri
     }
 
     private fun validateFilename() {
