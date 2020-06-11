@@ -53,6 +53,7 @@ class ExternalImageFileSaver(context: Context, private val imageBitmap: Bitmap) 
     @Throws(java.lang.Exception::class)
     fun save(): Uri? {
         validateFilename()
+
         val savedImageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
             saveAndroidAbove10()
         else
@@ -64,8 +65,17 @@ class ExternalImageFileSaver(context: Context, private val imageBitmap: Bitmap) 
     }
 
     private fun validateFilename() {
-        if (filename.isNullOrEmpty() || !filename!!.endsWith(".jpg") || !filename!!.endsWith(".png"))
+        if (filename.isNullOrEmpty())
             filename = System.currentTimeMillis().toString() + ".jpg"
+
+        if (!filename!!.endsWith(".jpg") || !filename!!.endsWith(".png"))
+            filename += ".jpg"
+
+        if (filename!!.contains(" "))
+            filename?.replace(" ", "_")
+
+        if (filename!!.contains("-"))
+            filename?.replace("-", "_")
     }
 
     /**
