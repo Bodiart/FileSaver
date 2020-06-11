@@ -1,0 +1,3 @@
+rootProject.name='FileSaver'
+include ':app'
+include ':file_saver'
